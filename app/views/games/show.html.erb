@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <%= @game.played_at.strftime("%B %d, %Y") %>
+</h1>
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>
+
+<ul>
+<% @game.results.order(:place).each do |result| %>
+  <li>
+    <%= result.place %> 
+    - 
+    <%= link_to result.player.name, result.player %>
+    <%= link_to 'Edit', edit_result_path(result) %> 
+  </li>
+<% end %>
+</ul>
+
+<%= link_to 'Add Player', new_result_path(game_id: @game.id) %>
+
