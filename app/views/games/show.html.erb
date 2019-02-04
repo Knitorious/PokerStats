@@ -1,22 +1,44 @@
 <p id="notice"><%= notice %></p>
 
-<h1>
-  <%= @game.played_at.strftime("%B %d, %Y") %>
-</h1>
+<div class="d-flex">
+  <h1 class="flex-grow-1">
+    <%= @game.played_at.strftime("%B %d, %Y") %>
+  </h1>
+  <div>
+    <%= link_to 'Edit', edit_game_path(@game), class: "btn btn-outline-dark" %>
+    <%= link_to 'Calculate Results', calculate_game_path(@game), method: :patch, class: "btn btn-primary" %>
+  </div>  
+</div>
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Place</th>
+      <th scope="col">Player</th>
+      <th scope="col">Points</th>
+      <th scope="col">Winnings</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
 
-<ul>
-<% @game.results.order(:place).each do |result| %>
-  <li>
-    <%= result.place %> 
-    - 
-    <%= link_to result.player.name, result.player %>
-    <%= link_to 'Edit', edit_result_path(result) %> 
-  </li>
-<% end %>
-</ul>
+  <tbody>
+    <% @game.results.order(:place).each do |result| %>
+      <tr>
+        <td scope="row"><%= result.place %></td>
+        <td><%= link_to result.player.name, result.player, class: "text-dark" %></td>
+        <td><%= result.points %></td>
+        <td><%= number_to_currency result.winnings, precision: 0 %></td>
+        <td><%= link_to 'Edit', edit_result_path(result), class: "text-muted" %></td>
+      </tr>
+    <% end %>
 
-<%= link_to 'Add Player', new_result_path(game_id: @game.id) %>
+      <tr>
+        <td colspan="5">
+          <%= link_to 'Add Player', new_result_path(game_id: @game.id), class: "d-block text-center" %>
+        </td>
+      </tr> 
+  </tbody>
+</table>
+
+
 
