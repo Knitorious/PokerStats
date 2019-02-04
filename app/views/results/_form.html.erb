@@ -11,22 +11,22 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :game_id %>
-    <%= form.collection_select :game_id, Game.all, :id, :played_at %>
+    <%= form.collection_select :game_id, Game.all, :id, :played_at, {}, { class: "form-control" } %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :player_id %>
-    <%= form.collection_select :player_id, @players, :id, :name %>
+    <%= form.collection_select :player_id, @players, :id, :name, {}, { class: "form-control" } %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :place %>
-    <%= form.number_field :place %>
+    <%= form.number_field :place, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

@@ -15,6 +15,7 @@ class ResultsController < ApplicationController
   # GET /results/new
   def new
     @result = Result.new(game_id: params[:game_id]) 
+    @result.place = @result.game.results.maximum(:place).to_i + 1 if @result.game.present? 
     player_ids = @result.game.results.pluck(:player_id)
     @players = Player.where.not(id: player_ids)
   end

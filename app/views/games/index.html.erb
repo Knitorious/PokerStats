@@ -1,26 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Games</h1>
+<div class="d-flex">
+  <h1 class="flex-grow-1">Games</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Played at</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <div>
+    <%= link_to 'New Game', new_game_path, class: "btn btn-primary" %>
+  </div>
+</div> 
 
-  <tbody>
-    <% @games.each do |game| %>
-      <tr>
-        <td><%= link_to game.played_at.strftime("%B %d, %Y"), game, class: 'btn btn-primary' %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= month_calendar events: @games, attribute: :played_at do |day, games| %>
+  <% games.each do |game| %>
+    <%= link_to game.played_at.strftime("%e"), game, class: 'btn btn-primary' %>
+  <% end %>  
 
-<br>
+  <% if games.none? %>
+    <%= day.strftime("%e") %>
+  <% end %>
+<% end %>
 
-<%= link_to 'New Game', new_game_path %>
+
