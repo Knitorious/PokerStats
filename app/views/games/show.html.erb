@@ -24,7 +24,7 @@
   <tbody>
     <% @game.results.order(:place).each do |result| %>
       <tr>
-        <td scope="row"><%= result.place %></td>
+        <td scope="row"><%= result.place.ordinalize %></td>
         <td><%= link_to result.player.name, result.player, class: "text-dark" %></td>
         <td><%= result.points %></td>
         <td><%= number_to_currency result.winnings, precision: 0 %></td>

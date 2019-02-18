@@ -1,8 +1,35 @@
 <p id="notice"><%= notice %></p>
 
-<h1>
-  <%= @player.name %>
-</h1>
+<div class="d-flex justify-content-between">
+  <h1><%= @player.name %></h1>
+  <div>
+    <%= link_to 'Edit', edit_player_path(@player) %> |
+    <%= link_to 'Back', players_path %>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_player_path(@player) %> |
-<%= link_to 'Back', players_path %>
+<hr />
+
+<h5><%= pluralize @results.size, "Game" %> Played</h5>
+
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>Game</th>
+      <th>Place</th>
+      <th>Points</th>
+      <th>Net Winnings</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @results.each do |result| %>
+      <tr>
+        <td><%= link_to result.game.played_at.strftime("%B %d, %Y"), result.game %></td>
+        <td><%= result.place.ordinalize %></td>
+        <td><%= result.points %></td>
+        <td><%= number_to_currency result.winnings - 20, precision: 0 %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

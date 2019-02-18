@@ -4,12 +4,14 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    @players = Player.all
+    @players = Player.order(points: :desc)
+    @player = Player.new
   end
 
   # GET /players/1
   # GET /players/1.json
   def show
+    @results = @player.results.joins(:game).order("games.played_at desc")
   end
 
   # GET /players/new
@@ -28,7 +30,7 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       if @player.save
-        format.html { redirect_to @player, notice: 'Player was successfully created.' }
+        format.html { redirect_to players_path, notice: 'Player was successfully created.' }
         format.json { render :show, status: :created, location: @player }
       else
         format.html { render :new }

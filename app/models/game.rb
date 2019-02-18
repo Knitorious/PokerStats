@@ -18,7 +18,11 @@ class Game < ApplicationRecord
             result.update(points: points)
             previous_points = points 
         end
-        
+     
+        Player.find_each do |player|
+            player.calculate_stats
+        end
+         
     end
 
     def find_result_by_place(place)
@@ -30,11 +34,29 @@ class Game < ApplicationRecord
     end
 
     def second_place_winnings
-        40
+        case results.size
+        when 6
+            20
+        when 7
+            40
+        when 8..11
+            40
+        when 12..99
+            60
+        else
+            0
+        end
     end
 
     def third_place_winnings
-        20
+        case results.size
+        when 8..11
+            20
+        when 12..99
+            20
+        else
+            0
+        end
     end
     
 end

@@ -14,7 +14,10 @@
   <% end %>  
 
   <% if games.none? %>
-    <%= day.strftime("%e") %>
+  <div class="d-flex justify-content-between">  
+    <div><%= day.strftime("%e") %></div>
+    <%= link_to '+', new_game_path(played_at: day) %>
+  </div>
   <% end %>
 <% end %>
 
